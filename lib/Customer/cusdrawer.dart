@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:urbanmed/cusdashboard.dart';
-import 'package:urbanmed/cust_pharmaby_by_area.dart';
-import 'package:urbanmed/custlogin.dart';
-import 'package:urbanmed/faq_screen.dart';
-import 'package:urbanmed/helppage.dart';
-import 'package:urbanmed/orderhistory.dart';
-import 'package:urbanmed/profilepage.dart';
-import 'package:urbanmed/screen.dart';
+import 'package:urbanmed/Customer/cusdashboard.dart';
+import 'package:urbanmed/Customer/cust_pharmaby_by_area.dart';
+import 'package:urbanmed/Common/faq_screen.dart';
+import 'package:urbanmed/Common/helppage.dart';
+import 'package:urbanmed/CheckoutPage/orderhistory.dart';
+import 'package:urbanmed/CheckoutPage/profilepage.dart';
+import 'package:urbanmed/CheckoutPage/screen.dart';
 
 class MyDrawer extends StatefulWidget {
   @override
@@ -42,7 +41,7 @@ class DrawerState extends State<MyDrawer> {
           UserAccountsDrawerHeader(
             arrowColor: Colors.transparent,
             accountName: Text(''),
-            accountEmail: Text("${auth.currentUser.email}"),
+            accountEmail: Text("${auth.currentUser?.email}"),
             onDetailsPressed: () {},
           ),
           ListTile(

@@ -1,14 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:geodesy/geodesy.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:urbanmed/cusdrawer.dart';
-import 'package:flutter/material.dart';
-import 'package:urbanmed/customer_product_screen.dart';
-import 'package:urbanmed/no_data_Found.dart';
-import 'Cart_Page.dart';
 
 class ShopData {
   double latitude;
@@ -21,14 +16,14 @@ class ShopData {
   String emailid;
 
   ShopData(
-      {this.latitude,
-      this.longitude,
-      this.shopname,
-      this.id,
-      this.pincode,
-      this.address,
-      this.contactNUmber,
-      this.emailid});
+      { required this.latitude,
+        required this.longitude,
+        required this.shopname,
+        required this.id,
+        required this.pincode,
+        required this.address,
+        required this.contactNUmber,
+        required this.emailid});
 }
 
 class CustomerDashboard extends StatefulWidget {
@@ -40,14 +35,14 @@ class CustomerDashboard extends StatefulWidget {
 
 class CustomerDashboardState extends State<CustomerDashboard> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-  Position currentPosition;
-  String currentAddress;
+  late Position currentPosition;
+  late String currentAddress;
   Icon cusIcon = Icon(Icons.search);
   Widget cusSearchbar = Text("UrbanMed");
 
   TextEditingController radiuscontroller = TextEditingController();
-  bool isloading;
-  File image;
+  bool ?isloading;
+  File ?image;
   var listShopID = <ShopData>[];
 
   @override
@@ -69,7 +64,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
     isloading = true;
     listShopID = <ShopData>[];
     setState(() {});
-    currentPosition = await Geolocator()
+    currentPosition = await Geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
     var query = await FirebaseFirestore.instance.collection('Retailer').get();
@@ -93,7 +88,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           print(
               "[distanceBetweenTwoGeoPoints] Distance: " + distance.toString());
           if (distance == 0) {
-            var shopDatas = ShopData();
+            var shopDatas = ShopData(latitude: currentPosition.latitude , longitude: currentPosition.longitude);
             shopDatas.id = query.docs[i].id;
             shopDatas.latitude = latitude;
             shopDatas.longitude = longitude;
@@ -106,7 +101,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
           } else {
             if (radiuscontroller.text.isNotEmpty) {
               if (distance <= int.parse(radiuscontroller.text)) {
-                var shopDatas = ShopData();
+                var shopDatas = ShopData(latitude: currentPosition.latitude, longitude: currentPosition.longitude);
                 shopDatas.id = query.docs[i].id;
                 shopDatas.latitude = latitude;
                 shopDatas.longitude = longitude;
@@ -291,7 +286,7 @@ class CustomerDashboardState extends State<CustomerDashboard> {
     setState(() {});
   }
 
-  Future<String> createAlertDialog(BuildContext context) {
+  Future createAlertDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:urbanmed/checkout_screen.dart';
 import 'package:urbanmed/no_data_Found.dart';
 
+import 'no_data_Found.dart';
+
 class CartPage extends StatefulWidget {
-  CartPage({Key key}) : super(key: key);
+  CartPage({required Key key}) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -19,7 +21,7 @@ class _CartPageState extends State<CartPage> {
         appBar: AppBar(
           title: Text("Cart"),
           actions: <Widget>[
-            FlatButton(
+            ElevatedButton(
                 child: Text(
                   "Clear",
                   style: TextStyle(color: Colors.white),
@@ -63,7 +65,7 @@ class _CartPageState extends State<CartPage> {
         body: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('Customers')
-                .doc(auth.currentUser.uid)
+                .doc(auth.currentUser?.uid)
                 .collection('Cart')
                 .snapshots(),
             builder: (context, snapshot) {
@@ -76,7 +78,7 @@ class _CartPageState extends State<CartPage> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          itemCount: snapshot.data.docs.length,
+                          itemCount: snapshot.data?.docs.length,
                           itemBuilder: (context, index) {
                             return Card(
                               elevation: 0.8,

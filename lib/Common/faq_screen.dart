@@ -5,11 +5,11 @@ class FaqClass {
   String title;
   String subTitle;
 
-  FaqClass({this.title, this.subTitle});
+  FaqClass({required this.title, required this.subTitle});
 }
 
 class FAQScreen extends StatefulWidget {
-  FAQScreen({Key key}) : super(key: key);
+  FAQScreen({required Key key}) : super(key: key);
 
   @override
   _FAQScreenState createState() => _FAQScreenState();
@@ -83,7 +83,7 @@ class MyHomePageState extends State<MyHomePage> {
 class Card1 extends StatefulWidget {
   final FaqClass faqClass;
 
-  Card1({this.faqClass});
+  Card1({required this.faqClass});
 
   @override
   _Card1State createState() => _Card1State();
